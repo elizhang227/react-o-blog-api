@@ -35,10 +35,14 @@ router.post('/add', async (req, res, next) => {
 });
 
 router.put('/update/:post_id?', async (req, res) => {
+    console.log('req params', req.params)
     const { post_id } = req.params;
-    const { title, author_id, content } = req.body;
+    console.log('this is post id', post_id)
+    console.log('this is req body', req.body)
+    const { newContent } = req.body;
+    //const author_id = 1;
 
-    const response = await PostModel.updateEntry(post_id, "content", content);
+    const response = await PostModel.updateEntry(post_id, "content", newContent);
 
     (response.command === 'UPDATE' && response.rowCount >= 1) ? res.sendStatus(200) : res.send(`Could not edit post`).status(409);
 });
